@@ -95,7 +95,30 @@ class DoctorList extends Component implements HasForms, HasTable
                 // ...
             ])
             ->actions([
-                EditAction::make('edit')->color('success'),
+                EditAction::make('edit')->color('success')->form([
+                    Fieldset::make('INFORMATION')->schema([
+                        TextInput::make('firstname')->required(),
+                        TextInput::make('middlename'),
+                        TextInput::make('lastname'),
+                        DatePicker::make('birthdate'),
+                        TextInput::make('branch'),
+                        Select::make('specialization')->options([
+                            'Orthodontics' => 'Orthodontics',
+                            'Periodontics' => 'Periodontics',
+                            'Endodontics' => 'Endodontics',
+                            'Prosthodontics' => 'Prosthodontics',
+                            'Pediatric Dentistry' => 'Pediatric Dentistry',
+                            'Oral and Maxillofacial Surgery' => 'Oral and Maxillofacial Surgery',
+                            'Oral Pathology' => 'Oral Pathology',
+                            'Dental Public Health' => 'Dental Public Health',
+                            'Oral Radiology' => 'Oral Radiology',
+                            'Cosmetic Dentistry' => 'Cosmetic Dentistry',
+                            'Implant Dentistry' => 'Implant Dentistry',
+                        ]),
+                        TimePicker::make('start_time')->required(),
+                        TimePicker::make('end_time')->required(),
+                    ]),
+                ]),
                 DeleteAction::make('delete'),
             ])
             ->bulkActions([

@@ -35,41 +35,41 @@ class Records extends Component implements HasForms, HasTable
     {
         return $table
             ->query(Patient::query())->headerActions([
-                CreateAction::make('patient')->label('Add Patient')->action(
-                    function($data){
-                        $user = User::create([
-                            'name' => $data['first_name']. ' '. $data['last_name'],
-                            'email' => $data['email'],
-                            'password' => bcrypt('password'),
-                            'user_type' => 'patient',
-                        ]);
+                // CreateAction::make('patient')->label('Add Patient')->action(
+                //     function($data){
+                //         $user = User::create([
+                //             'name' => $data['first_name']. ' '. $data['last_name'],
+                //             'email' => $data['email'],
+                //             'password' => bcrypt('password'),
+                //             'user_type' => 'patient',
+                //         ]);
 
-                        Patient::create([
-                            'patient_number' => $this->generateCode('P-', Patient::count() + 1),
-                            'first_name' => $data['first_name'],
-                            'last_name' => $data['last_name'],
-                            'age' => $data['age'],
-                            'gender' => $data['gender'],
-                            'address' => $data['address'],
-                            'contact_number' => $data['contact_number'],
-                            'user_id' => $user->id,
-                        ]);
+                //         Patient::create([
+                //             'patient_number' => $this->generateCode('P-', Patient::count() + 1),
+                //             'first_name' => $data['first_name'],
+                //             'last_name' => $data['last_name'],
+                //             'age' => $data['age'],
+                //             'gender' => $data['gender'],
+                //             'address' => $data['address'],
+                //             'contact_number' => $data['contact_number'],
+                //             'user_id' => $user->id,
+                //         ]);
 
-                    }
-                )->form([
-                    Fieldset::make('PATIENT INFORMATION')->schema([
-                        TextInput::make('first_name')->label('Firstname')->required(),
-                        TextInput::make('last_name')->label('Lastname')->required(),
-                        TextInput::make('age')->required()->numeric(),
-                        Select::make('gender')->options([
-                            'Male' => 'Male',
-                            'Female' => 'Female',
-                        ])->required(),
-                        TextInput::make('address')->required()->columnSpan(2),
-                        TextInput::make('contact_number')->required(),
-                        TextInput::make('email')->required(),
-                    ])
-                ])->modalWidth('2xl')
+                //     }
+                // )->form([
+                //     Fieldset::make('PATIENT INFORMATION')->schema([
+                //         TextInput::make('first_name')->label('Firstname')->required(),
+                //         TextInput::make('last_name')->label('Lastname')->required(),
+                //         TextInput::make('age')->required()->numeric(),
+                //         Select::make('gender')->options([
+                //             'Male' => 'Male',
+                //             'Female' => 'Female',
+                //         ])->required(),
+                //         TextInput::make('address')->required()->columnSpan(2),
+                //         TextInput::make('contact_number')->required(),
+                //         TextInput::make('email')->required(),
+                //     ])
+                // ])->modalWidth('2xl')
             ])
             ->columns([
                 TextColumn::make('patient_number')->label('PATIENT ID')->searchable(),
@@ -84,6 +84,11 @@ class Records extends Component implements HasForms, HasTable
                 // ...
             ])
             ->actions([
+                Action::make('view')->button()->label('VIEW')->icon('heroicon-o-eye')->url(
+                    function($record) {
+                        return route(auth()->user()->user_type == 'admin' ? 'admin.patient-view' : 'secretary.patient-view', ['id' => $record->id]);
+                    }
+                ),
                 EditAction::make('edit')->color('success')->action(
                     function($record,$data){
                         $record->update([

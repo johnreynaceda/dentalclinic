@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\Patient;
+use App\Http\Middleware\Secretary;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -42,10 +44,29 @@ Route::prefix('administrator')->middleware(['auth', 'verified'])->group(function
     Route::get('/history', function () {
         return view('admin.history');
     })->name('admin.history');
+
+    Route::get('/appointments', function () {
+        return view('admin.appointments');
+    })->name('admin.appointments');
+
+    Route::get('/records', function () {
+        return view('admin.records');
+    })->name('admin.records');
+
+    Route::get('/schedule', function () {
+        return view('admin.schedule');
+    })->name('admin.schedule');
+
+    Route::get('/billing', function () {
+        return view('admin.billing');
+    })->name('admin.billing');
+    Route::get('/patient-view/{id}', function () {
+        return view('admin.patient-view');
+    })->name('admin.patient-view');
 });
 
 
-Route::prefix('secretary')->middleware(['auth', 'verified'])->group(function(){
+Route::prefix('secretary')->middleware(['auth', 'verified', Secretary::class])->group(function(){
     Route::get('/dashboard', function () {
         return view('secretary.dashboard');
     })->name('secretary.dashboard');
@@ -75,13 +96,16 @@ Route::prefix('secretary')->middleware(['auth', 'verified'])->group(function(){
     Route::get('/billing', function () {
         return view('secretary.billing');
     })->name('secretary.billing');
+    Route::get('/patient-view/{id}', function () {
+        return view('secretary.patient-view');
+    })->name('secretary.patient-view');
 
     Route::get('/history', function () {
         return view('secretary.history');
     })->name('secretary.history');
 });
 
-Route::prefix('patient')->middleware(['auth', 'verified'])->group(function(){
+Route::prefix('patient')->middleware(['auth', 'verified', Patient::class])->group(function(){
     Route::get('/dashboard', function () {
         return view('patient.dashboard');
     })->name('patient.dashboard');

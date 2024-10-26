@@ -29,7 +29,7 @@ class ServiceList extends Component implements HasForms, HasTable
     {
         return $table
             ->query(Service::query())->headerActions([
-                Action::make('category')->label('Categories')->color('gray')->url(fn() => route('secretary.category')),
+                Action::make('category')->label('Categories')->color('gray')->url(fn() => route(auth()->user()->user_type == 'admin' ? 'admin.category' : 'secretary.category')),
                 CreateAction::make('service')->label('Add Services')->form([
                     TextInput::make('name'),
                     TextInput::make('price')->numeric(),
