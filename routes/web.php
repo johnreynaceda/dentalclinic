@@ -38,6 +38,10 @@ Route::prefix('administrator')->middleware(['auth', 'verified'])->group(function
     Route::get('/category', function () {
         return view('admin.category');
     })->name('admin.category');
+
+    Route::get('/history', function () {
+        return view('admin.history');
+    })->name('admin.history');
 });
 
 
@@ -71,6 +75,10 @@ Route::prefix('secretary')->middleware(['auth', 'verified'])->group(function(){
     Route::get('/billing', function () {
         return view('secretary.billing');
     })->name('secretary.billing');
+
+    Route::get('/history', function () {
+        return view('secretary.history');
+    })->name('secretary.history');
 });
 
 Route::prefix('patient')->middleware(['auth', 'verified'])->group(function(){

@@ -138,6 +138,21 @@
                             </span>
                         </a>
                     </li>
+
+                    <li>
+                        <a class="{{ request()->routeIs('admin.history') ? 'bg-white text-main' : 'text-white' }} inline-flex items-center w-full px-4 py-2 mt-1 text-sm transition duration-200 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-white hover:text-main hover:scale-95"
+                            href="{{ route('admin.history') }}">
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-history">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            <span class="ml-3">
+                                History
+                            </span>
+                        </a>
+                    </li>
+
                 </ul>
                 <p class="px-4 pt-10 text-xs font-semibold text-gray-300 uppercase">
                     ACCOUNTS
@@ -327,6 +342,20 @@
                             </svg>
                             <span class="ml-3">
                                 Services
+                            </span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="{{ request()->routeIs('secretary.history') ? 'bg-white text-main' : 'text-white' }} inline-flex items-center w-full px-4 py-2 mt-1 text-sm transition duration-200 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-white hover:text-main hover:scale-95"
+                            href="{{ route('secretary.history') }}">
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-history">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            <span class="ml-3">
+                                History
                             </span>
                         </a>
                     </li>
