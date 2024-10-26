@@ -11,7 +11,7 @@
                             {{ \Carbon\Carbon::parse($appointment->appointment_date)->format('F d, Y') }}</p>
                         <p class="text-gray-600">Time:
                             {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('h:i A') }}</p>
-                        <p class="text-gray-600 mb-4">Status:
+                        <p class="text-gray-600 mb-4">Statuss:
                             <span
                                 class="font-semibold {{ $appointment->status === 'approved' ? 'text-green-600' : ($appointment->status === 'declined' ? 'text-red-600' : 'text-yellow-500') }}">
                                 {{ ucfirst($appointment->status) ?? 'Pending' }}
