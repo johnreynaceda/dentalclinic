@@ -13,10 +13,10 @@
         @endif
     </div>
 
-    <div class="grid grid-cols-3 gap-10 relative">
-        <div class="col-span-2">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10 relative">
 
-            <div class="mb-10 flex space-x-4 items-center">
+        <div class="md:col-span-2">
+            <div class="mb-6 flex flex-wrap space-x-2 items-center">
                 <button wire:click="$set('selected_category', null)"
                     class="{{ $selected_category == null ? 'bg-main text-white' : '' }} rounded-2xl p-2 px-4 border-main hover:bg-main hover:text-white border-2">
                     <span>All</span>
@@ -32,7 +32,7 @@
             </div>
 
 
-            <div class="containner mx-auto">
+            <div class="container mx-auto">
                 <div class="space-y-3">
                     @foreach ($services as $item)
                         <div class="flex px-4 bg-white rounded-xl items-start space-x-3 py-6">
@@ -49,8 +49,9 @@
             </div>
         </div>
 
-        <!-- Selected Services and Total Fee -->      <div>
-            <div class="border rounded-3xl flex flex-col bg-white p-5 h-[40rem]">
+
+        <div>
+            <div class="border rounded-3xl flex flex-col bg-white p-5 h-auto md:h-[40rem]">
                 <div class="flex-1 space-y-4">
                     <h3 class="text-xl font-semibold">Selected Services</h3>
                     @forelse ($selectedServices as $service)
@@ -67,7 +68,7 @@
                     </div>
                 </div>
                 <button wire:click="openModal"
-                    class="w-full bg-main p-2.5 rounded-2xl text-white font-semibold text-lg hover:bg-gray-600">
+                    class="w-full bg-main p-2.5 rounded-2xl text-white font-semibold text-lg hover:bg-gray-600 mt-4 md:mt-0">
                     <span>Continue</span>
                 </button>
             </div>
@@ -75,9 +76,10 @@
     </div>
 
 
-    <div x-data="{ open: @entangle('showModal') }" x-show="open" class="fixed inset-0 flex items-center justify-center z-50"
+    <div x-data="{ open: @entangle('showModal') }" x-show="open"
+        class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50"
         style="display: none;">
-        <div class="bg-white rounded-lg shadow-lg p-6 max-w-lg mx-auto">
+        <div class="bg-white rounded-lg shadow-lg p-6 max-w-lg w-full mx-4 sm:mx-auto">
             <h3 class="text-lg font-semibold">Confirm Appointment</h3>
             <p>Please enter the appointment date and time:</p>
             <div class="mt-4">
