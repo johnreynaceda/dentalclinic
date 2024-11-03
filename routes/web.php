@@ -103,6 +103,14 @@ Route::prefix('secretary')->middleware(['auth', 'verified', Secretary::class])->
     Route::get('/history', function () {
         return view('secretary.history');
     })->name('secretary.history');
+
+    Route::get('/walk-in', function () {
+        return view('secretary.walk-in');
+    })->name('secretary.walk-in');
+
+    Route::get('/add-patient', function () {
+        return view('secretary.add-patient');
+    })->name('secretary.add-patient');
 });
 
 Route::prefix('patient')->middleware(['auth', 'verified', Patient::class])->group(function(){

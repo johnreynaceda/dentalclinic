@@ -119,6 +119,24 @@
                                             </span>
                                         </a>
                                     </li>
+
+                                    <li>
+                                        <a class="inline-flex items-center w-full px-4 py-2 mt-1 text-sm  text-white transition duration-200 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-white hover:text-main hover:scale-95 "
+                                            href="{{ route('admin.appointments') }}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-text">
+                                                <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
+                                                <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+                                                <path d="M10 9H8" />
+                                                <path d="M16 13H8" />
+                                                <path d="M16 17H8" />
+                                            </svg>
+                                            <span class="ml-3">
+                                                Appointment
+                                            </span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -328,6 +346,43 @@
                                             </span>
                                         </a>
                                     </li>
+
+                                    <li>
+                                        <a class="inline-flex items-center w-full px-4 py-2 mt-1 text-sm  text-white transition duration-200 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-white hover:text-main hover:scale-95 "
+                                            href="{{ route('secretary.walk-in') }}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round"
+                                                class="lucide lucide-file-text">
+                                                <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
+                                                <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+                                                <path d="M10 9H8" />
+                                                <path d="M16 13H8" />
+                                                <path d="M16 17H8" />
+                                            </svg>
+                                            <span class="ml-3">
+                                               Walk In
+                                            </span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a class="inline-flex items-center w-full px-4 py-2 mt-1 text-sm text-white transition duration-200 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-white hover:text-main hover:scale-95"
+                                            href="{{ route('secretary.add-patient') }}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                class="lucide lucide-user-plus">
+                                                <path d="M16 21v-2a4 4 0 0 0-8 0v2" />
+                                                <circle cx="12" cy="7" r="4" />
+                                                <line x1="22" y1="11" x2="18" y2="11" />
+                                                <line x1="20" y1="9" x2="20" y2="13" />
+                                            </svg>
+                                            <span class="ml-3">
+                                                Add Patient
+                                            </span>
+                                        </a>
+                                    </li>
+
                                 </ul>
                             </div>
                         </div>
