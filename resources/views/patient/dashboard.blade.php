@@ -2,7 +2,7 @@
     <div>
         <div class="my-6">
             <h1 class="text-2xl font-semibold text-gray-900">Doctor's Schedule</h1>
-            <p class="text-sm leading-5 text-gray-500">View any of their schdule and book new ones.</p>
+            <p class="text-sm leading-5 text-gray-500">View any of their schedule and book new ones.</p>
         </div>
         <div class="bg-white rounded-3xl mx-auto max-w-4xl p-5">
             <ul role="list" class="divide-y divide-gray-100">

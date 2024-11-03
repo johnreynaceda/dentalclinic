@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Patient;
 
-use App\Models\Appointment;
+use App\Models\appointment;
 use App\Models\Service;
 use App\Models\ServiceCategory;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +15,8 @@ class Services extends Component
     public $appointmentTime;
     public $selected_category;
     public $selectedServiceIds = [];
+
+    public $branch;
     public $showModal = false;
 
     public function toggleService($serviceId)
@@ -37,6 +39,7 @@ class Services extends Component
     $this->validate([
         'appointmentDate' => 'required|date',
         'appointmentTime' => 'required',
+        'branch' => 'required',
     ]);
 
     if (empty($this->selectedServiceIds)) {
@@ -51,10 +54,11 @@ class Services extends Component
 
 
     $appointment = Appointment::create([
-        'user_id' => Auth::id(),
-        'patient_id' => Auth::id(),
+        'user_id' => auth()->user()->id,
+        'patient_id' => auth()->user()->patient->id,
         'appointment_date' => $this->appointmentDate,
         'appointment_time' => $this->appointmentTime,
+        'branch' => $this->branch,
         'total_fee' => $totalFee,
         'service_id' => $this->selectedServiceIds[0] ?? null,
     ]);

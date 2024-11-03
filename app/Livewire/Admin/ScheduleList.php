@@ -15,9 +15,11 @@ class ScheduleList extends Component
             function($event) {
                 return [
                     'title' => $event->user->name,
-                    'start' => Carbon::parse($event->appointment_date),
-                    'end' => Carbon::parse($event->appointment_time),
-                    'extendedProps' => ['description' => Carbon::parse($event->appointment_date)->format('F d, Y'). '  '. Carbon::parse($event->appointment_time)->format('h:i A')],
+                    'start' => Carbon::parse($event->appointment_date . ' ' . $event->appointment_time)->toDateTimeString(),
+                    'end' => Carbon::parse($event->appointment_date . ' ' . $event->appointment_time)->addHours(1)->toDateTimeString(), // Assuming a 1-hour duration; adjust as needed
+                    'extendedProps' => [
+                        'description' => Carbon::parse($event->appointment_date)->format('F d, Y') . ' ' . Carbon::parse($event->appointment_time)->format('h:i A'),
+                    ],
                 ];
             }
         );

@@ -156,7 +156,7 @@
                         </a>
                     </li>
 
-                    <li>
+                    {{-- <li>
                         <a class="{{ request()->routeIs('admin.history') ? 'bg-white text-main' : 'text-white' }} inline-flex items-center w-full px-4 py-2 mt-1 text-sm transition duration-200 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-white hover:text-main hover:scale-95"
                             href="{{ route('admin.history') }}">
 
@@ -170,7 +170,7 @@
                                 History
                             </span>
                         </a>
-                    </li>
+                    </li> --}}
 
                 </ul>
                 <p class="px-4 pt-10 text-xs font-semibold text-gray-300 uppercase">
@@ -365,7 +365,7 @@
                         </a>
                     </li>
 
-                    <li>
+                    {{-- <li>
                         <a class="{{ request()->routeIs('secretary.history') ? 'bg-white text-main' : 'text-white' }} inline-flex items-center w-full px-4 py-2 mt-1 text-sm transition duration-200 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-white hover:text-main hover:scale-95"
                             href="{{ route('secretary.history') }}">
 
@@ -379,7 +379,7 @@
                                 History
                             </span>
                         </a>
-                    </li>
+                    </li> --}}
                 </ul>
                 <p class="px-4 pt-10 text-xs font-semibold text-gray-300 uppercase">
                     ACCOUNTS

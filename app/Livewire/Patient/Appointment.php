@@ -2,24 +2,35 @@
 
 namespace App\Livewire\Patient;
 
-use App\Models\Appointment as AppointmentModel;
+use App\Models\appointment as AppointmentModel;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Appointment extends Component
 {
-    public $appointments;
+    public $appointmentss = [];
+    public $openModal = false;
+
+    public $payments;
 
     public function mount()
     {
 
-        $this->appointments = AppointmentModel::where('user_id', Auth::id())->get();
+        $this->appointmentss = AppointmentModel::where('user_id', Auth::id())->get();
+    }
+
+
+    public function openBill($id){
+        $this->payments = AppointmentModel::where('id', $id)->first();
+
+        // dd($this->payments);
+        $this->openModal = true;
     }
 
     public function render()
     {
         return view('livewire.patient.appointment', [
-            'appointments' => $this->appointments
+            'appointments' => $this->appointmentss
         ]);
     }
 }

@@ -74,7 +74,7 @@ class Appointments extends Component implements HasForms, HasTable
     public function mount()
     {
 
-        $this->appointments = Appointment::all();
+        // $this->appointments = Appointment::all();
     }
 
     public function approve($id)

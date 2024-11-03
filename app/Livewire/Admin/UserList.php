@@ -64,7 +64,7 @@ class UserList extends Component implements HasForms, HasTable
                     TextInput::make('name'),
                     TextInput::make('email'),
                 ])->modalWidth('xl'),
-                // DeleteAction::make('delete'),
+                DeleteAction::make('delete'),
             ])
             ->bulkActions([
                 // ...

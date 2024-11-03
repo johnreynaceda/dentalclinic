@@ -1,4 +1,4 @@
-<div class="p-6  min-h-screen">
+<div class="p-6  min-h-screen" x-data="{ modalOpen: @entangle('openModal') }">
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         @forelse ($appointments as $appointment)
@@ -11,12 +11,29 @@
                             {{ \Carbon\Carbon::parse($appointment->appointment_date)->format('F d, Y') }}</p>
                         <p class="text-gray-600">Time:
                             {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('h:i A') }}</p>
+                        <p class="text-gray-600">Branch:
+                            {{ $appointment->branch }}</p>
                         <p class="text-gray-600 mb-4">Status:
                             <span
                                 class="font-semibold {{ $appointment->status === 'approved' ? 'text-green-600' : ($appointment->status === 'declined' ? 'text-red-600' : 'text-yellow-500') }}">
                                 {{ ucfirst($appointment->status) ?? 'Pending' }}
                             </span>
                         </p>
+
+                        @if ($appointment->status === 'approved')
+                            <button wire:click="openBill({{ $appointment->id }})"
+                                class="bg-main px-4 text-white rounded-xl hover:bg-gray-500 hover:scale-95 flex space-x-1 py-1">
+                                <span>Bills</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-receipt-text">
+                                    <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z" />
+                                    <path d="M14 8H8" />
+                                    <path d="M16 12H8" />
+                                    <path d="M13 16H8" />
+                                </svg>
+                            </button>
+                        @endif
                     </div>
 
 
@@ -24,7 +41,7 @@
                         <span
                             class="text-xl font-semibold text-gray-800">₱{{ number_format($appointment->total_fee, 2) }}</span>
                         @if ($appointment->status == 'pending')
-                            <button
+                            <button @click="modalOpen = true"
                                 class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200">
                                 View Details
                             </button>
@@ -83,5 +100,81 @@
                 <h1 class="mt-5 text-xl">No Appointment available...</h1>
             </div>
         @endforelse
+    </div>
+    <div class="relative z-50 w-auto h-auto">
+        <template x-teleport="body">
+            <div x-show="modalOpen" class="fixed top-0 left-0 z-[99] flex items-center justify-center w-screen h-screen"
+                x-cloak>
+                <div x-show="modalOpen" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-300"
+                    x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" @click="modalOpen=false"
+                    class="absolute inset-0 w-full h-full bg-black bg-opacity-40"></div>
+                <div x-show="modalOpen" x-trap.inert.noscroll="modalOpen" x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave="ease-in duration-200"
+                    x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    class="relative w-full py-6 bg-white px-7 sm:max-w-2xl sm:rounded-lg">
+                    <div class="flex items-center justify-between pb-2">
+                        <h3 class="text-lg font-semibold">Payment Records</h3>
+                        <button @click="modalOpen=false"
+                            class="absolute top-0 right-0 flex items-center justify-center w-8 h-8 mt-5 mr-5 text-gray-600 rounded-full hover:text-gray-800 hover:bg-gray-50">
+                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="relative w-auto">
+                        <div class="mt-5">
+                            <h1>Total Payments: <span
+                                    class="font-bold">&#8369;{{ number_format($payments->total_fee ?? 0, 2) }}</span>
+                            </h1>
+                            {{-- <h1>Total Paid: <span
+                                    class="font-bold">&#8369;{{ number_format($payments->appointmentPayments->sum('paid_amount') ?? 0, 2) }}</span>
+                            </h1> --}}
+                        </div>
+                        <div class="mt-5">
+                            @if ($payments)
+                                <table class="min-w-full divide-y border border-gray-500 divide-gray-500">
+                                    <thead>
+                                        <tr class="text-gray-700">
+                                            <th class="px-5 py-3 text-xs font-medium text-left uppercase">PAID AMOUNT
+                                            </th>
+                                            <th class="px-5 py-3 text-xs font-medium text-left uppercase">CREATED AT
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-500">
+                                        @forelse ($payments->appointmentPayments as $item)
+                                            <tr class="text-neutral-800">
+                                                <td class="px-5 py-2 text-sm font-medium whitespace-nowrap">
+                                                    &#8369;{{ number_format($item->paid_amount, 2) }}
+                                                </td>
+                                                <td class="px-5 py-2 text-sm whitespace-nowrap">
+                                                    {{ \Carbon\Carbon::parse($item->created_at)->format('F d, Y') }}
+                                                </td>
+                                            </tr>
+                                        @empty
+                                            <tr class="text-gray-500">
+                                                <td class="px-5 py-2 text-sm font-medium whitespace-nowrap text-center"
+                                                    colspan="2">No payment records found.</td>
+                                            </tr>
+                                        @endforelse
+                                        <tr class="text-gray-700">
+                                            <td class="px-5 py-2 text-sm whitespace-nowrap">
+                                                TOTAL: <strong>&#8369;
+                                                    {{ number_format($payments->appointmentPayments->sum('paid_amount'), 2) }}</strong>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
     </div>
 </div>

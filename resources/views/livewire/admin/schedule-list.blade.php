@@ -5,6 +5,8 @@
     <script src="https://unpkg.com/tippy.js@6"></script>
 
     <div class="bg-white p-10 rounded-xl">
+
+
         <div x-data="{
             events: @js($events),
             initCalendar() {

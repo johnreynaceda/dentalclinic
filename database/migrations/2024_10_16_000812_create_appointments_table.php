@@ -14,11 +14,12 @@ return new class extends Migration
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('patient_id');
+            $table->foreignId('patient_id');
             $table->string('total_fee');
             $table->foreignId('service_id')->constrained();
             $table->date('appointment_date');
             $table->time('appointment_time');
+            $table->string('branch');
             $table->string('status')->nullable();
             $table->boolean('is_fully_paid')->default(false);
             $table->timestamps();

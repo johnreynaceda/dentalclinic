@@ -77,8 +77,7 @@
 
 
     <div x-data="{ open: @entangle('showModal') }" x-show="open"
-        class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50"
-        style="display: none;">
+        class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50" style="display: none;">
         <div class="bg-white rounded-lg shadow-lg p-6 max-w-lg w-full mx-4 sm:mx-auto">
             <h3 class="text-lg font-semibold">Confirm Appointment</h3>
             <p>Please enter the appointment date and time:</p>
@@ -97,6 +96,19 @@
                 @error('appointmentTime')
                     <span class="text-red-500 text-sm">{{ $message }}</span>
                 @enderror
+            </div>
+            <div class="mt-4">
+                <select wire:model="branch" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm">
+                    <option value="">Select Branch</option>
+                    <option value="Tayuman">Tayuman</option>
+                    <option value="Laong Laan">Laong Laan</option>
+                    <option value="Gilmore">Gilmore</option>
+                    <option value="Marikina">Marikina</option>
+                    <option value="Makati">Makati</option>
+                    <option value="Antipolo">Antipolo</option>
+                    <option value="Laspiñas">Laspiñas</option>
+
+                </select>
             </div>
             <div class="mt-4 flex justify-end space-x-2">
                 <button @click="open = false" class="text-gray-500 hover:text-gray-700">Cancel</button>

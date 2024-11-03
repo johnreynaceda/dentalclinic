@@ -16,12 +16,10 @@ return new class extends Migration
             $table->string('firstname');
             $table->string('middlename')->nullable();
             $table->string('lastname');
-            $table->date('birthdate');
             $table->string('branch')->nullable();
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();
             $table->string('specialization')->nullable();
-            $table->foreignId('user_id');
             $table->timestamps();
         });
     }

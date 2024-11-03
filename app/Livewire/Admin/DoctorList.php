@@ -34,23 +34,16 @@ class DoctorList extends Component implements HasForms, HasTable
             ->query(Doctor::query())->headerActions([
                 CreateAction::make('doctor')->label('Add Doctor')->action(
                     function($data){
-                        $user = User::create([
-                            'name' => $data['firstname']. ' '. $data['lastname'],
-                            'email' => $data['email'],
-                            'password' => bcrypt($data['password']),
-                            'user_type' => 'doctor',
-                        ]);
+                        
 
                         Doctor::create([
                             'firstname' => $data['firstname'],
                             'middlename' => $data['middlename'],
                             'lastname' => $data['lastname'],
-                            'birthdate' => $data['birthdate'],
                             'branch' => $data['branch'],
                            'specialization' => $data['specialization'],
                             'start_time' => $data['start_time'],
                             'end_time' => $data['end_time'],
-                            'user_id' => $user->id,
                         ]);
                     }
                 )->form([
@@ -58,8 +51,15 @@ class DoctorList extends Component implements HasForms, HasTable
                         TextInput::make('firstname')->required(),
                         TextInput::make('middlename'),
                         TextInput::make('lastname'),
-                        DatePicker::make('birthdate'),
-                        TextInput::make('branch'),
+                        Select::make('branch')->options([
+                            'Tayuman' => 'Tayuman',
+                            'Laong Laan' => 'Laong Laan',
+                            'Gilmore' => 'Gilmore',
+                            'Marikina' => 'Marikina',
+                            'Makati' => 'Makati',
+                            'Antipolo' => 'Antipolo',
+                            'Las Piñas' => 'Las Piñas',
+                        ]),
                         Select::make('specialization')->options([
                             'Orthodontics' => 'Orthodontics',
                             'Periodontics' => 'Periodontics',
@@ -76,11 +76,7 @@ class DoctorList extends Component implements HasForms, HasTable
                         TimePicker::make('start_time')->required(),
                         TimePicker::make('end_time')->required(),
                     ]),
-                    Fieldset::make('ACCOUNT')->schema([
-                        TextInput::make('email')->email()->required(),
-                        TextInput::make('password')->password()->required(),
-                       
-                    ])
+                    
                 ])->hidden(auth()->user()->user_type == 'admin')
             ])
             ->columns([
