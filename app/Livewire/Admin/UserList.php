@@ -61,7 +61,7 @@ class UserList extends Component implements HasForms, HasTable
             ])
             ->actions([
                 EditAction::make('edit')->color('success')->form([
-                    TextInput::make('name'),
+                    TextInput::make('name')->alpha(),
                     TextInput::make('email'),
                 ])->modalWidth('xl'),
                 DeleteAction::make('delete'),

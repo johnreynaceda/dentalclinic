@@ -39,11 +39,22 @@ class PatientView extends Component implements HasForms
     }
 
     public function uploadForm(){
+        $this->validate([
+            'upload' => 'required',
+        ]);
+
+        
         foreach ($this->upload as $key => $value) {
             PatientAttachment::create([
                 'patient_id' => $this->patient_id,
                 'attachment_path' => $value->store('Attachment', 'public'),
             ]);
+        }
+
+        if (auth()->user()->user_type == 'admin') {
+           return redirect()->route('admin.patient-view', ['id' => $this->patient_id]);
+        }else{
+            return redirect()->route('secretary.patient-view', ['id' => $this->patient_id]);
         }
     }
 

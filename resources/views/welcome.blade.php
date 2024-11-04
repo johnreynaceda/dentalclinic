@@ -349,12 +349,12 @@
             <div class="grid sm:grid-cols-2 items-start gap-16  p-4 mx-auto max-w-4xl  font-[sans-serif]">
                 <div>
                     <h1 class="text-gray-800 text-3xl font-extrabold">Let's Talk</h1>
-                    <p class="text-sm text-gray-500 mt-4">Have some big idea or brand to develop and need help? Then
-                        reach out we'd love to hear about your project and provide help.</p>
+                    <p class="text-sm text-gray-500 mt-4">We’re here to help! If you have any questions or concerns
+                        please don’t hesitate to reach out. Our friendly team is ready to assist you</p>
 
                     <div class="mt-12">
                         <h2 class="text-gray-800 text-base font-bold">Email</h2>
-                        <ul class="mt-4">
+                        <ul class="mt-4 space-y-3">
                             <li class="flex items-center">
                                 <div
                                     class="bg-[#e6e6e6cf] h-10 w-10 rounded-full text-main flex items-center justify-center shrink-0">
@@ -370,13 +370,28 @@
                                     <strong>GCDental@gmail.com</strong>
                                 </a>
                             </li>
+                            <li class="flex items-center">
+                                <div
+                                    class="bg-[#e6e6e6cf] h-10 w-10 rounded-full  flex items-center justify-center shrink-0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone">
+                                        <path
+                                            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                                    </svg>
+                                </div>
+                                <a href="javascript:void(0)" class="text-main text-sm ml-4">
+                                    <small class="block">Phone Number</small>
+                                    <strong>09123456789</strong>
+                                </a>
+                            </li>
                         </ul>
                     </div>
 
 
                 </div>
 
-                <form class="ml-auto space-y-4">
+                {{-- <form class="ml-auto space-y-4">
                     <input type='text' placeholder='Name'
                         class="w-full rounded-md py-3 px-4 bg-gray-100 text-gray-800 text-sm outline-blue-500 focus:bg-transparent" />
                     <input type='email' placeholder='Email'
@@ -387,7 +402,7 @@
                         class="w-full rounded-md px-4 bg-gray-100 text-gray-800 text-sm pt-3 outline-blue-500 focus:bg-transparent"></textarea>
                     <button type='button'
                         class="text-white bg-main hover:bg-blue-600 tracking-wide rounded-md text-sm px-4 py-3 w-full !mt-6">Send</button>
-                </form>
+                </form> --}}
             </div>
         </div>
     </section>

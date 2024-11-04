@@ -48,9 +48,9 @@ class DoctorList extends Component implements HasForms, HasTable
                     }
                 )->form([
                     Fieldset::make('INFORMATION')->schema([
-                        TextInput::make('firstname')->required(),
-                        TextInput::make('middlename'),
-                        TextInput::make('lastname'),
+                        TextInput::make('firstname')->required()->alpha(),
+                        TextInput::make('middlename')->alpha(),
+                        TextInput::make('lastname')->alpha(),
                         Select::make('branch')->options([
                             'Tayuman' => 'Tayuman',
                             'Laong Laan' => 'Laong Laan',
@@ -93,10 +93,9 @@ class DoctorList extends Component implements HasForms, HasTable
             ->actions([
                 EditAction::make('edit')->color('success')->form([
                     Fieldset::make('INFORMATION')->schema([
-                        TextInput::make('firstname')->required(),
-                        TextInput::make('middlename'),
-                        TextInput::make('lastname'),
-                        DatePicker::make('birthdate'),
+                        TextInput::make('firstname')->required()->alpha(),
+                        TextInput::make('middlename')->alpha(),
+                        TextInput::make('lastname')->alpha(),
                         TextInput::make('branch'),
                         Select::make('specialization')->options([
                             'Orthodontics' => 'Orthodontics',

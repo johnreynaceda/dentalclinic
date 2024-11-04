@@ -20,6 +20,7 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
+use Flasher\SweetAlert\Prime\SweetAlertInterface;
 
 class Billing extends Component implements HasForms, HasTable
 {
@@ -48,6 +49,8 @@ class Billing extends Component implements HasForms, HasTable
                        return'PAID';
                     }elseif ($record->appointmentPayments->sum('paid_amount') == 0) {
                        return 'UNPAID';
+                    }elseif($record->appointmentPayments->sum('paid_amount') >= $record->total_fee) {
+                        return 'FULLY PAID';
                     }else{
                        return 'PARTIALLY PAID';
                     }
@@ -65,19 +68,24 @@ class Billing extends Component implements HasForms, HasTable
             ActionGroup::make([
                 Action::make('add')->label('Add Payment')->color('success')->icon('heroicon-o-banknotes')->action(
                     function($record, $data){
-                        if ($record->total_fee == ($record->appointmentPayments->sum('paid_amount') + $data['payment_amount'])) {
+                        
+
+                        if (($data['payment_amount'] + $record->appointmentPayments->sum('paid_amount')) > $record->total_fee) {
+                            // Display validation error or handle case accordingly
+                            sweetalert()->error('Payment amount cannot exceed Total Remaining');
+                        } elseif (($data['payment_amount'] + $record->appointmentPayments->sum('paid_amount')) == $record->total_fee) {
                             $record->update([
-                                'is_fully_paid' => true,
-                            ]);
+                                        'is_fully_paid' => true,
+                                    ]);
+                                    AppointmentPayment::create([
+                                        'appointment_id' => $record->id,
+                                        'paid_amount' => $data['payment_amount'],
+                                    ]);
+                        } else {
                             AppointmentPayment::create([
-                                'appointment_id' => $record->id,
-                                'paid_amount' => $data['payment_amount'],
-                            ]);
-                        }else{
-                            AppointmentPayment::create([
-                                'appointment_id' => $record->id,
-                                'paid_amount' => $data['payment_amount'],
-                            ]);
+                                        'appointment_id' => $record->id,
+                                        'paid_amount' => $data['payment_amount'],
+                                    ]);
                         }
                     }
                 )->form([
