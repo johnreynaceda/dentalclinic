@@ -7,6 +7,8 @@ use App\Models\Service;
 use App\Models\service_selected;
 use App\Models\Shop\Product;
 use App\Models\User;
+use App\Notifications\AppointmentNotification;
+use App\Notifications\DeclineAppointment;
 use Carbon\Carbon;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DatePicker;
@@ -70,7 +72,6 @@ class Appointments extends Component implements HasForms, HasTable
                                 'appointment_time' => $data['time'],
                                 'total_fee' => $total_fee,
                                 'branch' => $data['branch'],
-                                'service_id' => 1,
                                 'status' => 'approved',
                             ]);
 
@@ -94,7 +95,6 @@ class Appointments extends Component implements HasForms, HasTable
                                 'appointment_time' => $data['time'],
                                 'total_fee' => $total_fee,
                                 'branch' => $data['branch'],
-                                'service_id' => 1,
                                 'status' => 'approved',
                             ]);
 
@@ -163,8 +163,10 @@ class Appointments extends Component implements HasForms, HasTable
                     fn($record) => '₱'.number_format($record->total_fee,2)
                 ),
                 TextColumn::make('status')->label('STATUS')->badge()->color(fn (string $state): string => match ($state) {
+                    '' => 'warning',
                     'approved' => 'success',
                     'declined' => 'danger',
+                    'cancelled' => 'danger',
                 })
             ])
             ->filters([
@@ -177,6 +179,8 @@ class Appointments extends Component implements HasForms, HasTable
                           $record->update([
                             'status' => 'approved'
                           ]);
+                          $record->user->notify(new AppointmentNotification($record));
+
                         }
                     ),
                     Action::make('declined')->color('danger')->icon('heroicon-s-hand-thumb-down')->action(
@@ -184,6 +188,8 @@ class Appointments extends Component implements HasForms, HasTable
                           $record->update([
                             'status' => 'declined'
                           ]);
+                          
+                          $record->user->notify(new DeclineAppointment($record));
                         }
                     ),
                 ])->visible(fn($record) => $record->status == null)

@@ -16,14 +16,12 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreignId('patient_id');
             $table->string('total_fee');
-            $table->foreignId('service_id')->constrained();
             $table->date('appointment_date');
             $table->time('appointment_time');
             $table->string('branch');
             $table->string('status')->nullable();
             $table->boolean('is_fully_paid')->default(false);
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

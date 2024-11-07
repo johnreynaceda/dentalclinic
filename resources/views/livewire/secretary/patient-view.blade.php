@@ -36,8 +36,11 @@
 
         </div>
     </div>
-    <div class="grid grid-cols-3 mt-10 gap-5">
-        <div>
+    <div class="grid grid-cols-2 mt-10 gap-5">
+        <div class="space-y-5">
+            <div class="bg-white p-2 rounded-2xl">
+                <livewire:treatment-plan />
+            </div>
             <div class="bg-white p-5 rounded-2xl">
                 <div>
                     <h1 class="font-bold text-xl text-main">ATTACHMENTS</h1>
@@ -63,8 +66,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-span-2  bg-white  rounded-2xl">
-            <div class="flex justify-between items-center border-b px-10 py-5 ">
+        <div class="  bg-white  rounded-2xl">
+            <div class="flex justify-between items-center border-b px-5 py-5 ">
                 <h1 class="font-bold text-2xl text-main">APPOINTMENT HISTORY</h1>
                 <button
                     class="bg-gray-700 px-5 py-2 hover:bg-gray-500 text-white rounded-2xl flex space-x-2 font-semibold"
@@ -86,7 +89,6 @@
                         <thead>
                             <tr class="text-gray-700">
                                 <th class="px-5 py-3  font-medium text-left uppercase">PATIENT NUMBER</th>
-                                <th class="px-5 py-3  font-medium text-left uppercase">FULLNAME</th>
                                 <th class="px-5 py-3  font-medium text-left uppercase">DATE & TIME</th>
                                 <th class="px-5 py-3  font-medium text-left uppercase">TOTAL FEE</th>
                             </tr>
@@ -97,9 +99,7 @@
                                     <td class="px-5 py-2  font-medium whitespace-nowrap">
                                         {{ $item->patient->patient_number }}
                                     </td>
-                                    <td class="px-5 py-2  font-medium whitespace-nowrap">
-                                        {{ $item->patient->user->name }}
-                                    </td>
+
                                     <td class="px-5 py-2  font-medium whitespace-nowrap">
                                         {{ \Carbon\Carbon::parse($item->appointment_date)->format('F d, Y') . ' ' . \Carbon\Carbon::parse($item->appointment_time)->format('h:i A') }}
                                     </td>

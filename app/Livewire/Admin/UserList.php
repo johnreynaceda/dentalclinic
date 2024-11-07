@@ -42,7 +42,7 @@ class UserList extends Component implements HasForms, HasTable
                         ]);
                     }
                 )->form([
-                    TextInput::make('name'),
+                    TextInput::make('name')->alpha(),
                     TextInput::make('email'),
                     TextInput::make('password'),
                 ])->modalWidth('xl')

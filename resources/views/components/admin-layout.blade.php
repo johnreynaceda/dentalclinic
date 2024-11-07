@@ -110,6 +110,7 @@
                                             <div class="h-px my-1 -mx-1 bg-neutral-200"></div>
                                             <form method="POST" action="{{ route('logout') }}">
                                                 @csrf
+                                                <livewire:user-password />
                                                 <a href="route('logout')"
                                                     onclick="event.preventDefault();
                                                         this.closest('form').submit();"

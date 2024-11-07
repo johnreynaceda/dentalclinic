@@ -23,6 +23,7 @@
             class="absolute top-0 z-50 w-56 mt-12 -translate-x-1/2 left-1/2" x-cloak>
             <div class="p-1 mt-1 bg-white border rounded-md shadow-md border-neutral-200/70 text-neutral-700">
                 <div class="h-px my-1 -mx-1 bg-neutral-200"></div>
+                <livewire:user-password />
                 <div class="h-px my-1 -mx-1 bg-neutral-200"></div>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
