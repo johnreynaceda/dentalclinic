@@ -10,10 +10,12 @@ use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 
+
 class Services extends Component
 {
-    public $appointmentDate;
     public $appointmentTime;
+    public $appointmentDate;
+
     public $selected_category;
     public $selectedServiceIds = [];
 
@@ -34,12 +36,22 @@ class Services extends Component
         $this->showModal = true;
     }
 
+    public $timeSlots = [
+        '8:00-9:00 am',
+        '10:00-11:00 am',
+        '12:00-1:00 pm',
+        '2:00-3:00 pm',
+        '4:00-6:00 pm'
+    ];
     public function submitAppointment()
     {
         $this->validate([
-            'appointmentDate' => 'required|date',
-            'appointmentTime' => 'required|date_format:H:i',
+            'appointmentDate' => 'required|date|after_or_equal:today',
+            'appointmentTime' => 'required',
             'branch' => 'required',
+        ], [
+            'appointmentDate.after_or_equal' => 'The appointment date cannot be in the past.',
+            'appointmentTime.required' => 'Please select a time slot.',
         ]);
 
         if (empty($this->selectedServiceIds)) {
@@ -47,62 +59,34 @@ class Services extends Component
             return;
         }
 
-        if (!$this->isValidTime($this->appointmentTime)) {
-            $this->addError('appointmentTime', 'The appointment time must be between 8:00 AM and 6:00 PM.');
-            return;
-        }
 
-        // Check if the appointment time and date is already approved
-        $existingAppointment = Appointment::where('appointment_date', $this->appointmentDate)
-            ->where('appointment_time', $this->appointmentTime)
-            ->where('branch', $this->branch)
-            ->where('status', 'approved')
-            ->exists();
+        $selectedServices = Service::whereIn('id', $this->selectedServiceIds)->get();
+        $totalFee = $selectedServices->sum('price');
 
-        if ($existingAppointment) {
-            $this->addError('appointmentDate', 'An appointment at this date and time is already approved.');
-            return;
-        }
 
-        DB::beginTransaction();
-        
-        try {
-            // Get selected services and calculate total fee
-            $selectedServices = Service::whereIn('id', $this->selectedServiceIds)->get();
-            $totalFee = $selectedServices->sum('price');
+        $appointment = Appointment::create([
+            'user_id' => auth()->user()->id,
+            'patient_id' => auth()->user()->patient->id,
+            'appointment_date' => $this->appointmentDate,
+          'appointment_time' => $this->appointmentTime,
+            'branch' => $this->branch,
+            'total_fee' => $totalFee,
+            'service_id' => $this->selectedServiceIds[0] ?? null,
+        ]);
 
-            // Create appointment
-            $appointment = Appointment::create([
-                'user_id' => Auth::id(),
-                'patient_id' => Auth::user()->patient->id,
-                'appointment_date' => $this->appointmentDate,
-                'appointment_time' => $this->appointmentTime,
-                'branch' => $this->branch,
-                'total_fee' => $totalFee,
+        // Insert selected services
+        foreach ($this->selectedServiceIds as $serviceId) {
+            DB::table('service_selecteds')->insert([
+                'appointment_id' => $appointment->id,
+                'service_id' => $serviceId,
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
-
-            // Insert selected services
-            foreach ($this->selectedServiceIds as $serviceId) {
-                DB::table('service_selecteds')->insert([
-                    'appointment_id' => $appointment->id,
-                    'service_id' => $serviceId,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
-            }
-
-            DB::commit();
-
-            // Reset state after successful submission
-            $this->reset(['appointmentDate', 'appointmentTime', 'selectedServiceIds', 'showModal']);
-
-            session()->flash('success', 'Appointment successfully submitted!');
-            return redirect()->route('patient.appointment');
-
-        } catch (\Exception $e) {
-            DB::rollBack();
-            session()->flash('error', 'An error occurred while submitting the appointment. Please try again.');
         }
+
+        $this->reset(['appointmentDate', 'appointmentTime', 'selectedServiceIds', 'showModal']);
+        session()->flash('success', 'Appointment successfully submitted!');
+        return redirect()->route('patient.appointment');
     }
 
     private function isValidTime($time)
@@ -112,7 +96,6 @@ class Services extends Component
         $end = Carbon::createFromTime(18, 0);
         $appointmentTime = Carbon::createFromFormat('H:i', $time);
 
-        return $appointmentTime->between($start, $end);
     }
 
     public function render()
