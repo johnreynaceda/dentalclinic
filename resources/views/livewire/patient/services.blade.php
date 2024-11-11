@@ -84,15 +84,19 @@
             <div class="mt-4">
                 <label for="appointmentDate" class="block text-sm font-medium text-gray-700">Appointment Date</label>
                 <input type="date" wire:model.defer="appointmentDate"
-                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm" required>
-                @error('appointmentDate')
-                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                @enderror
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm" required>
+         @error('appointmentDate')
+             <span class="text-red-500 text-sm">{{ $message }}</span>
+         @enderror
             </div>
             <div class="mt-4">
                 <label for="appointmentTime" class="block text-sm font-medium text-gray-700">Appointment Time</label>
-                <input type="time" wire:model.defer="appointmentTime"
-                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm" required>
+                <select wire:model.defer="appointmentTime" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm">
+                    <option value="">Select a time </option>
+                    @foreach($timeSlots as $slot)
+                        <option value="{{ $slot }}">{{ $slot }}</option>
+                    @endforeach
+                </select>
                 @error('appointmentTime')
                     <span class="text-red-500 text-sm">{{ $message }}</span>
                 @enderror

@@ -10,7 +10,7 @@
                         <p class="text-gray-600">Appointment Date:
                             {{ \Carbon\Carbon::parse($appointment->appointment_date)->format('F d, Y') }}</p>
                         <p class="text-gray-600">Time:
-                            {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('h:i A') }}</p>
+                            {{ $appointment->appointment_time }}</p>
                         <p class="text-gray-600">Branch:
                             {{ $appointment->branch }}</p>
                         <p class="text-gray-600 mb-4">Status:

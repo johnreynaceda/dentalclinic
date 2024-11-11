@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Livewire\Secretary;
-
+use App\Models\User;
 use App\Models\Patient;
 use Livewire\Component;
 
@@ -27,6 +27,21 @@ class AddPatient extends Component
     public function submit()
     {
         $this->validate();
+
+        // Patient::create([
+        //     'patient_number' => Patient::generatePatientId(),
+        //     'first_name' => $this->first_name,
+        //     'last_name' => $this->last_name,
+        //     'age' => $this->age,
+        //     'gender' => $this->gender,
+        //     'address' => $this->address,
+        //     'contact_number' => $this->contact_number,
+        //     'user_id' => auth()->id(),
+        // ]);
+
+        $patient_id = User::generatePatientId();
+
+        $count = Patient::count();
 
         Patient::create([
             'patient_number' => Patient::generatePatientId(),

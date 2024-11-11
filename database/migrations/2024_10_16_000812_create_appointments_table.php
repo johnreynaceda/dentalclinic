@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('total_fee');
             $table->foreignId('service_id')->constrained();
             $table->date('appointment_date');
-            $table->time('appointment_time');
+            $table->string('appointment_time');
             $table->string('branch');
             $table->string('status')->nullable();
             $table->boolean('is_fully_paid')->default(false);
